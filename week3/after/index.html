@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>KnockoutJs example</title>
+</head>
+<body>
+
+    <form>
+        <input type="text" data-bind="value: personToAdd.firstname">
+        <input type="text" data-bind="value: personToAdd.lastname">
+        <button data-bind="click: add">Add</button>
+    </form>
+
+    <ul data-bind="foreach: people">
+        <li>
+            <span data-bind="text: firstname"></span>
+            <strong data-bind="text: lastname"></strong>
+            <a href="#" data-bind="click: $parent.remove">x</a>
+        </li>
+    </ul>
+
+    <script src="js/vendor/jquery-2.1.1.min.js"></script>
+    <script src="js/vendor/knockout-3.2.0.min.js"></script>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
