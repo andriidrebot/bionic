@@ -10,7 +10,29 @@
         <h1>Task tracker</h1>
         <hr />
 
+        <form class="form-horizontal" role="form" data-bind="submit: add">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" placeholder="Type your task here" data-bind="value: taskToAdd, valueUpdate: 'afterkeydown'">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </form>
+
+        <ul class="list-group" data-bind="foreach: tasks">
+            <li class="list-group-item">
+                <span data-bind="text: title"></span>
+            </li>
+        </ul>
+
     </div>
+
+
+
 
     <script src="js/vendor/jquery-2.1.1.min.js"></script>
     <script src="js/vendor/knockout-3.2.0.min.js"></script>
