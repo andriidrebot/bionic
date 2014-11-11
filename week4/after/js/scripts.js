@@ -13,8 +13,30 @@
         },
         remove: function (task) {
             viewModel.tasks.remove(task);
-        }
+        },
+
+        hideCompleted: ko.observable()
     }
+
+    viewModel.filteredTasks = ko.computed(function () {
+        var hideCompleted = viewModel.hideCompleted();
+
+        if (!hideCompleted) {
+            return viewModel.tasks();
+        }
+
+        var result = [];
+
+        viewModel.tasks().forEach(function (task) {
+            if (task.isCompleted()) {
+                return;
+            }
+
+            result.push(task);
+        });
+
+        return result;
+    });
 
     ko.applyBindings(viewModel);
 

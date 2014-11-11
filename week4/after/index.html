@@ -28,7 +28,19 @@
             </div>
         </form>
 
-        <ul class="list-group" data-bind="foreach: tasks">
+        <!-- ko if: tasks().length -->
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6 text-right">
+                <label>
+                    <input type="checkbox" data-bind="checked: hideCompleted" />
+                    Hide completed tasks
+                </label>
+            </div>
+        </div>
+        <!-- /ko -->
+
+        <ul class="list-group" data-bind="foreach: filteredTasks">
             <li class="list-group-item" data-bind="css: { 'success': isCompleted }">
                 <a href="#" class="badge" data-bind="click: $parent.remove">x</a>
                 <input type="checkbox" data-bind="checked: isCompleted" />
