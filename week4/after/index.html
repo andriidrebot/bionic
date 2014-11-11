@@ -30,7 +30,14 @@
 
         <!-- ko if: tasks().length -->
         <div class="row">
-            <div class="col-sm-6"></div>
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Filter</button>
+                    </span>
+                    <input type="text" class="form-control" data-bind="value: filter, valueUpdate:'afterkeydown'">
+                </div>
+            </div>
             <div class="col-sm-6 text-right">
                 <label>
                     <input type="checkbox" data-bind="checked: hideCompleted" />
@@ -39,6 +46,7 @@
             </div>
         </div>
         <!-- /ko -->
+        <hr />
 
         <ul class="list-group" data-bind="foreach: filteredTasks">
             <li class="list-group-item" data-bind="css: { 'success': isCompleted }">

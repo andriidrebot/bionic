@@ -15,26 +15,28 @@
             viewModel.tasks.remove(task);
         },
 
-        hideCompleted: ko.observable()
+        hideCompleted: ko.observable(),
+        filter: ko.observable()
     }
 
     viewModel.filteredTasks = ko.computed(function () {
-        var hideCompleted = viewModel.hideCompleted();
-
-        if (!hideCompleted) {
-            return viewModel.tasks();
-        }
+        var
+            hideCompleted = viewModel.hideCompleted(),
+            filter = viewModel.filter()
+        ;
 
         var result = [];
-
         viewModel.tasks().forEach(function (task) {
-            if (task.isCompleted()) {
+            if (hideCompleted && task.isCompleted()) {
+                return;
+            }
+
+            if (filter && task.title.indexOf(filter) == -1) {
                 return;
             }
 
             result.push(task);
         });
-
         return result;
     });
 
