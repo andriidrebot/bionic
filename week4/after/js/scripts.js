@@ -6,7 +6,8 @@
         taskToAdd: ko.observable(),
         add: function () {
             viewModel.tasks.push({
-                title: viewModel.taskToAdd()
+                title: viewModel.taskToAdd(),
+                isCompleted: ko.observable(false)
             });
             viewModel.taskToAdd('');
         },

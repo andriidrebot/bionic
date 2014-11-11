@@ -3,6 +3,11 @@
 <head>
     <title>Issue tracker</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .success.success {
+            background-color: #dff0d8;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,8 +29,9 @@
         </form>
 
         <ul class="list-group" data-bind="foreach: tasks">
-            <li class="list-group-item">
+            <li class="list-group-item" data-bind="css: { 'success': isCompleted }">
                 <a href="#" class="badge" data-bind="click: $parent.remove">x</a>
+                <input type="checkbox" data-bind="checked: isCompleted" />
                 <span data-bind="text: title"></span>
             </li>
         </ul>
