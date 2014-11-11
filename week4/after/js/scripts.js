@@ -1,7 +1,7 @@
 ﻿$(function () {
 
     var viewModel = {
-        tasks: ko.observableArray([]),
+        tasks: ko.observableArray(),
 
         taskToAdd: ko.observable(),
         add: function () {
@@ -9,6 +9,9 @@
                 title: viewModel.taskToAdd()
             });
             viewModel.taskToAdd('');
+        },
+        remove: function (task) {
+            viewModel.tasks.remove(task);
         }
     }
 

@@ -25,6 +25,7 @@
 
         <ul class="list-group" data-bind="foreach: tasks">
             <li class="list-group-item">
+                <a href="#" class="badge" data-bind="click: $parent.remove">x</a>
                 <span data-bind="text: title"></span>
             </li>
         </ul>
