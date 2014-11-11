@@ -6,7 +6,7 @@
         taskToAdd: ko.observable(),
         add: function () {
             viewModel.tasks.push({
-                title: viewModel.taskToAdd(),
+                title: ko.observable(viewModel.taskToAdd()),
                 isCompleted: ko.observable(false)
             });
             viewModel.taskToAdd('');
@@ -31,7 +31,7 @@
                 return;
             }
 
-            if (filter && task.title.indexOf(filter) == -1) {
+            if (filter && task.title().indexOf(filter) == -1) {
                 return;
             }
 

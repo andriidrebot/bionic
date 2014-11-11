@@ -51,8 +51,8 @@
         <ul class="list-group" data-bind="foreach: filteredTasks">
             <li class="list-group-item" data-bind="css: { 'success': isCompleted }">
                 <a href="#" class="badge" data-bind="click: $parent.remove">x</a>
-                <input type="checkbox" data-bind="checked: isCompleted" />
-                <span data-bind="text: title"></span>
+                <input type="checkbox" data-bind="checked: isCompleted, popover: 'Click here to make task completed'" />
+                <span data-bind="editableText: title"></span>
             </li>
         </ul>
 
@@ -64,6 +64,7 @@
     <script src="js/vendor/jquery-2.1.1.min.js"></script>
     <script src="js/vendor/knockout-3.2.0.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/knockout.bindingHandlers.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 </html>
