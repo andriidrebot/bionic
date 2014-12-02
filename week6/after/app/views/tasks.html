@@ -9,11 +9,11 @@
     <ul class="list-group">
         <!-- ko foreach: tasks -->
         <li class="list-group-item">
-            <span data-bind="text: title"></span>
+            <a href="#" data-bind="text: title, attr: { 'href': '#task/' + id }"></a>
         </li>
         <!-- /ko -->
     </ul>
 
-    
+
 
 </section>

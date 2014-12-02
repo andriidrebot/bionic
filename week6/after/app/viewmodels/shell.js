@@ -9,8 +9,11 @@
         activate: function () {
             router.map([
                 { route: '', title: 'Tasks', moduleId: 'viewmodels/tasks' },
-                { route: 'createTask', title: 'Create new task', moduleId: 'viewmodels/createTask' }
-            ]).buildNavigationModel();
+                { route: 'createTask', title: 'Create new task', moduleId: 'viewmodels/createTask' },
+                { route: 'task/:id', title: 'Create new task', moduleId: 'viewmodels/editTask' },
+
+               { route: '404', title: '404', moduleId: 'viewmodels/404' }
+            ]);
 
             return router.activate();
         }
