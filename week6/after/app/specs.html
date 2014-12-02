@@ -9,35 +9,91 @@
     <script src="../lib/jasmine-2.0.2/jasmine-html.js"></script>
     <script src="../lib/jasmine-2.0.2/boot.js"></script>
 
-    <script src="../lib/jquery/jquery-1.9.1.min.js"></script>
     <script src="../lib/knockout/knockout-3.1.0.js"></script>
+    <script src="../lib/jquery/jquery-1.9.1.min.js"></script>
     <script src="../lib/require/require.js"></script>
 
     <script>
-
-        var specs = [
-            'viewmodels/welcome.spec.js'
-        ];
 
         requirejs.config({
             paths: {
                 'text': '../lib/require/text',
                 'durandal': '../lib/durandal/js',
                 'plugins': '../lib/durandal/js/plugins',
-                'transitions': '../lib/durandal/js/transitions',
-                'knockout': '../lib/knockout/knockout-3.1.0',
-                'bootstrap': '../lib/bootstrap/js/bootstrap',
-                'jquery': '../lib/jquery/jquery-1.9.1'
-            },
-            shim: {
-                'bootstrap': {
-                    deps: ['jquery'],
-                    exports: 'jQuery'
-                }
+                'transitions': '../lib/durandal/js/transitions'
             },
             urlArgs: 'v=' + Math.random()
         });
 
+        define('jquery', function () {
+            return jQuery;
+        });
+
+        define('knockout', function () {
+            return ko;
+        });
+
+
+        var specs = [
+            'viewmodels/welcome.spec'
+        ];
+
+
+        // #region Custom matchers
+        //var matchers = {
+        //    toBeObservable: function (util, customEqualityTesters) {
+        //        return {
+        //            compare: function (actual) {
+        //                var result = {};
+        //                result.pass = ko.isObservable(actual);
+
+        //                if (result.pass) {
+        //                    result.message = "Ok";
+        //                } else {
+        //                    result.message = "Expected to be observable";
+        //                }
+        //                return result;
+        //            }
+        //        };
+        //    },
+        //    toBeObservableArray: function (util, customEqualityTesters) {
+        //        return {
+        //            compare: function (actual) {
+
+        //                var result = {};
+        //                result.pass = ko.isObservable(actual) && util.equals(ko.unwrap(actual), jasmine.any(Array), customEqualityTesters);
+
+        //                if (result.pass) {
+        //                    result.message = "Ok";
+        //                } else {
+        //                    result.message = "Expected to be observable array";
+        //                }
+        //                return result;
+        //            }
+        //        };
+        //    },
+        //    toBeFunction: function (util, customEqualityTesters) {
+        //        return {
+        //            compare: function (actual) {
+        //                var result = {};
+        //                result.pass = util.equals(actual, jasmine.any(Function), customEqualityTesters);
+
+        //                if (result.pass) {
+        //                    result.message = "Ok";
+        //                } else {
+        //                    result.message = "Expected to be function";
+        //                }
+        //                return result;
+        //            }
+        //        };
+        //    }
+        //}
+
+        //beforeEach(function () {
+        //    jasmine.addMatchers(matchers);
+        //});
+
+        //#endregion
 
         require(specs, function () {
             jasmine.getEnv().execute();
