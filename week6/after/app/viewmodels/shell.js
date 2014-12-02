@@ -8,7 +8,8 @@
         },
         activate: function () {
             router.map([
-                { route: '', title: 'Welcome', moduleId: 'viewmodels/welcome', nav: true }
+                { route: '', title: 'Tasks', moduleId: 'viewmodels/tasks' },
+                { route: 'createTask', title: 'Create new task', moduleId: 'viewmodels/createTask' }
             ]).buildNavigationModel();
 
             return router.activate();
