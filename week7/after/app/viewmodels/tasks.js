@@ -10,8 +10,8 @@
 
 
     function activate() {
-        var tasks = dataContext.getCollection();
-
-        viewModel.tasks(tasks);
+        return dataContext.getCollection().then(function (tasks) {
+            viewModel.tasks(tasks);
+        });
     }
 })

@@ -16,8 +16,12 @@
         dataContext.add({
             title: viewModel.title(),
             description: viewModel.description()
-        })
-        router.navigate('');
+        }).then(function (id) {
+            router.navigate('');
+        }).catch(function (e) {
+            console.error(e);
+        });
+
     }
 
     function deactivate() {

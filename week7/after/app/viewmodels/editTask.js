@@ -18,20 +18,20 @@
         self.task.title = viewModel.title();
         self.task.description = viewModel.description();
 
-        dataContext.update(self.task);
-
-        router.navigate('');
+        dataContext.update(self.task).then(function () {
+            router.replace('');
+        });
+        
     }
 
     function activate(id) {
-        self.task = dataContext.getById(id);
-
-        if (!self.task) {
+        return dataContext.getById(id).then(function (task) {
+            self.task = task;
+            viewModel.title(task.title);
+            viewModel.description(task.description);
+        }).catch(function () {
             router.navigate('404');
-        } else {
-            viewModel.title(self.task.title);
-            viewModel.description(self.task.description);
-        }
+        })
     }
 
 })
