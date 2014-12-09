@@ -1,23 +1,35 @@
 ﻿define([], function () {
 
+    var KEY = "TASKMANAGER_LOCALSTORAGE_KEY";
+
     var self = {
-        tasks: [{
-            id: '0',
-            title: 'Task 1',
-            description: 'Task 1 description'
-        }]
+        tasks: []
     };
+
+    try {
+        var str = localStorage.getItem(KEY);
+        self.tasks = JSON.parse(str) || [];
+    } catch (e) {
+        self.tasks = [];
+    }
 
     return {
         add: add,
+        update: update,
 
         getById: getById,
         getCollection: getCollection
     }
 
     function add(task) {
-        task.id = task.id || self.tasks.length;
+        task.id = task.id || self.tasks.length.toString();
         self.tasks.push(task);
+
+        saveToLocalStorage();
+    }
+
+    function update(task) {
+        saveToLocalStorage();
     }
 
     function getById(id) {
@@ -31,6 +43,11 @@
 
     function getCollection() {
         return self.tasks;
+    }
+
+    function saveToLocalStorage() {
+        var str = JSON.stringify(self.tasks);
+        localStorage.setItem(KEY, str);
     }
 
 })

@@ -18,6 +18,8 @@
         self.task.title = viewModel.title();
         self.task.description = viewModel.description();
 
+        dataContext.update(self.task);
+
         router.navigate('');
     }
 

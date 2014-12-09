@@ -22,6 +22,7 @@
     }
 
     function activate(id) {
+        debugger;
         self.task = dataContext.getById(id);
 
         if (!self.task) {
