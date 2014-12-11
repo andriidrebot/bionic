@@ -19,7 +19,7 @@
         self.task.description = viewModel.description();
 
         dataContext.update(self.task).then(function () {
-            router.replace('');
+            router.navigate('');
         });
         
     }

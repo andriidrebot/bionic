@@ -1,4 +1,4 @@
-﻿define(['Q', 'durandal/system'], function (Q, system) {
+﻿define(['Q', 'durandal/system', 'plugins/http'], function (Q, system, http) {
 
     var storage = {};
     storage.db = null;
@@ -54,25 +54,19 @@
     function add(task) {
         var dfd = Q.defer();
 
-        var db = storage.db;
-        var trans = db.transaction(["tasks"], "readwrite");
-        var store = trans.objectStore("tasks");
+        var url = 'https://api.parse.com/1/classes/tasks/';
+        var headers = {
+            "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
+            "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
 
-        var id = system.guid()
-
-        var request = store.put({
-            "id": id,
-            "title": task.title,
-            "description": task.description
-        });
-
-        request.onsuccess = function (e) {
-            dfd.resolve(id);
-        };
-
-        request.onerror = function (e) {
-            dfd.reject(e);
-        };
+        http.post(url, { title: task.title, description: task.description }, headers)
+            .done(function () {
+                dfd.resolve();
+            })
+            .fail(function () {
+                dfd.reject();
+            });
 
         return dfd.promise;
     }
@@ -80,23 +74,19 @@
     function update(task) {
         var dfd = Q.defer();
 
-        var db = storage.db;
-        var trans = db.transaction(["tasks"], "readwrite");
-        var store = trans.objectStore("tasks");
+        var url = 'https://api.parse.com/1/classes/tasks/' + task.objectId;
+        var headers = {
+            "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
+            "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
 
-        var request = store.put({
-            "id": task.id,
-            "title": task.title,
-            "description": task.description
-        });
-
-        request.onsuccess = function (e) {
-            dfd.resolve();
-        };
-
-        request.onerror = function (e) {
-            dfd.reject(e);
-        };
+        http.put(url, { title: task.title, description: task.description }, headers)
+            .done(function () {                
+                dfd.resolve();
+            })
+            .fail(function () {
+                dfd.reject();
+            });
 
         return dfd.promise;
     }
@@ -104,26 +94,23 @@
     function getById(id) {
         var dfd = Q.defer();
 
-        var db = storage.db;
-        var trans = db.transaction(["tasks"], "readwrite");
-        var store = trans.objectStore("tasks");
+        var url = 'https://api.parse.com/1/classes/tasks/' + id;
+        var headers = {
+            "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
+            "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
 
-        var keyRange = IDBKeyRange.only(id);
-        var cursorRequest = store.openCursor(keyRange);
-
-        cursorRequest.onsuccess = function (e) {
-            var result = e.target.result;
-            if (!!result == false) {
+        http.get(url, {}, headers)
+            .done(function (response) {
+                if (response) {
+                    dfd.resolve(response);
+                } else {
+                    dfd.reject();
+                }
+            })
+            .fail(function () {
                 dfd.reject();
-                return;
-            }
-
-            dfd.resolve(result.value);
-        };
-
-        cursorRequest.onerror = function () {
-            dfd.reject();
-        };
+            });
 
         return dfd.promise;
     }
@@ -131,28 +118,23 @@
     function getCollection() {
         var dfd = Q.defer();
 
-        var db = storage.db;
-        var trans = db.transaction(["tasks"], "readwrite");
-        var store = trans.objectStore("tasks");
+        var url = 'https://api.parse.com/1/classes/tasks/';
+        var headers = {
+            "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
+            "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
 
-        var collection = [];
-
-        var cursorRequest = store.openCursor();
-        cursorRequest.onsuccess = function (e) {
-            var result = e.target.result;
-            if (!!result == false) {
-                dfd.resolve(collection);
-                return;
-            }
-
-
-            collection.push(result.value);
-            result.continue();
-        };
-
-        cursorRequest.onerror = function (e) {
-            dfd.reject(e);
-        };
+        http.get(url, {}, headers)
+            .done(function (response) {
+                if (response) {
+                    dfd.resolve(response.results || []);
+                } else {
+                    dfd.reject();
+                }
+            })
+            .fail(function () {
+                dfd.reject();
+            });
 
         return dfd.promise;
     }
