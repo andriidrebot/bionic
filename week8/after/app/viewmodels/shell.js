@@ -12,7 +12,9 @@
                 { route: 'createTask', title: 'Create new task', moduleId: 'viewmodels/createTask' },
                 { route: 'task/:id', title: 'Create new task', moduleId: 'viewmodels/editTask' },
 
-               { route: '404', title: '404', moduleId: 'viewmodels/404' }
+                { route: 'signin', title: 'Sign in', moduleId: 'viewmodels/signin' },
+                { route: 'signup', title: 'Sign up', moduleId: 'viewmodels/signup' },
+                { route: '404', title: '404', moduleId: 'viewmodels/404' }
             ]);
 
             return router.activate();

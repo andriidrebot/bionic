@@ -1,4 +1,4 @@
-﻿define(['Q', 'durandal/system', 'plugins/http'], function (Q, system, http) {
+﻿define(['Q', 'durandal/system', 'plugins/http', 'userContext'], function (Q, system, http, userContext) {
 
     var storage = {};
     storage.db = null;
@@ -60,7 +60,18 @@
             "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
         }
 
-        http.post(url, { title: task.title, description: task.description }, headers)
+        var data = { title: task.title, description: task.description };
+
+        if (userContext.session) {
+            var acl = {};
+            acl[userContext.session.objectId] = {
+                "read": true,
+                "write": true
+            };
+            data.ACL = acl;
+        }
+
+        http.post(url, data, headers)
             .done(function () {
                 dfd.resolve();
             })
@@ -81,7 +92,7 @@
         }
 
         http.put(url, { title: task.title, description: task.description }, headers)
-            .done(function () {                
+            .done(function () {
                 dfd.resolve();
             })
             .fail(function () {
@@ -98,6 +109,10 @@
         var headers = {
             "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
             "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
+
+        if (userContext.session) {
+            headers["X-Parse-Session-Token"] = userContext.session.sessionToken;
         }
 
         http.get(url, {}, headers)
@@ -122,6 +137,10 @@
         var headers = {
             "X-Parse-Application-Id": "XrRQeum17tU7ogr7AJS1pt171EjiyuujXZyNlhZs",
             "X-Parse-REST-API-Key": "csLhjXRBqx6K1vr0NGSaehrQryzER38zLgh09wvu"
+        }
+
+        if (userContext.session) {
+            headers["X-Parse-Session-Token"] = userContext.session.sessionToken;
         }
 
         http.get(url, {}, headers)
