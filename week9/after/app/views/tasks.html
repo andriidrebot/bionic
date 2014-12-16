@@ -1,0 +1,19 @@
+﻿<section class="container">
+
+    <h2>Tasks</h2>
+
+    <div class="text-right">
+        <a href="#createTask" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</a>
+    </div>
+
+    <ul class="list-group">
+        <!-- ko foreach: tasks -->
+        <li class="list-group-item">
+            <a href="#" data-bind="text: title, attr: { 'href': '#task/' + objectId }"></a>
+        </li>
+        <!-- /ko -->
+    </ul>
+
+
+
+</section>
